@@ -1,0 +1,31 @@
+services:
+  db_services:
+    image: postgres:15
+    container_name: postgres_services_mailer
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  web_services:
+    build: .
+    container_name: web_services_mailer
+    restart: always
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./app:/app
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db_services:5432/postgres
+    depends_on:
+      - db_services
+
+volumes:
+  pgdata:
+

@@ -1,0 +1,38 @@
+line-length = 120
+
+src = ["app"]
+
+extend-exclude = [
+    "protos",
+    "migrations",
+    "tests",
+    "proto_builder",
+]
+
+[lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "B",
+    "PL",
+    "N",
+    "C4",
+    "PIE",
+    "T20",
+    "RET",
+    "SIM"
+]
+
+ignore = [
+    "SIM118",
+    "N815",
+    "B905"
+]
+
+[lint.pylint]
+max-args = 8
+
+[lint.isort]
+lines-between-types = 1
+order-by-type = true
